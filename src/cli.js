@@ -8,61 +8,58 @@ const log = console.log;
 const caminho = process.argv;
 
 
-async function processaTexto(args){
+async function processaTexto(args) {
     const caminho = args[2];
-    const valida = args[3] === '--valida';
+    // const valida = args[3] === '--valida';
 
-    try{
+    try {
         fs.lstatSync(caminho);
-    }catch(erro){
-        if(erro.code === 'ENOENT'){
+    } catch (erro) {
+        if (erro.code === 'ENOENT') {
             log(chalk.red('Arquivo ou diretório não existe...'));
             return;
         }
     }
 
-    if(fs.lstatSync(caminho).isFile()){
+    if (fs.lstatSync(caminho).isFile()) {
         const texto = await pegarArquivo(caminho);
         const urls = extraiLinks(texto);
-        await imprimeLinks(valida, caminho, urls);
-    }else if(fs.lstatSync(caminho).isDirectory()){
+        await imprimeLinks(caminho, urls);
+    } else if (fs.lstatSync(caminho).isDirectory()) {
         const arquivos = await fs.promises.readdir(caminho);
-        log(chalk.black.bgYellow('Lista de Links:')); 
+        log(chalk.black.bgYellow('Links:'));
         arquivos.forEach(async (arquivo) => {
             const texto = await pegarArquivo(`${caminho}/${arquivo}`);
             const urls = extraiLinks(texto);;
-            await imprimeLinks(valida, arquivo, urls);
+            await imprimeLinks(arquivo, urls);
         });
     }
-   
+
 }
 
-async function imprimeLinks(valida, arquivo, lista){
-    if(valida){
-        const urls = await urlsValidadas(lista);
-        log(chalk.black.bgGreen(`\nArquivo:${arquivo}`));
-        urls.forEach((url) => {
-            const urlStatus = (url[1]).split('-');
-            if(urlStatus[0] >= 200 && urlStatus[0] <= 299 ){
-                log(
-                    chalk.bold.yellow('URL:'),
-                    chalk.yellow(url[0]),
-                    chalk.black.bgGreen(chalk.bold.black('Status:'), url[1])
-                );
-            }else{
-                log(
-                    chalk.bold.yellow('URL:'),
-                    chalk.yellow(url[0]),
-                    chalk.black.bgRed(chalk.bold.black('Status:'), url[1])
-                );
-            }
-            
-        });
-    }else{
-        log(chalk.black.bgGreen(`\nArquivo:${arquivo}`));
-        log(chalk.black.bgYellow('Lista de links:'), lista);
-    }
+async function imprimeLinks(arquivo, lista) {
+
+    const urls = await urlsValidadas(lista);
+    log(chalk.black.bgYellow(`\nFile:${arquivo}`));
+    urls.forEach((url) => {
+        const urlStatus = (url[1]).split('-');
+        if (urlStatus[0] >= 200 && urlStatus[0] <= 299) {
+            log(
+                chalk.bold.yellow('URL:'),
+                chalk.yellow(url[0]),
+                chalk.black.bgGreen(chalk.bold.black('Status:'), url[1])
+            );
+        } else {
+            log(
+                chalk.bold.yellow('URL:'),
+                chalk.yellow(url[0]),
+                chalk.black.bgRed(chalk.bold.black('Status:'), url[1])
+            );
+        }
+
+    });
 }
+
 
 await processaTexto(caminho);
 
