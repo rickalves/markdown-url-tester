@@ -2,7 +2,7 @@
   "name": "markdown-url-tester",
   "version": "1.0.0",
   "description": "Tester of markdown url fetch status",
-  "main": "./cli.js",
+  "main": "./src/cli.js",
   "type": "module",
   "keywords": ["markdown", "URL"],
   "bugs": {
@@ -10,7 +10,7 @@
     "email" : "henryworkdev.ti@gmail.com"
   },
   "bin": {
-    "markdown-url-tester": "./cli.js"
+    "markdown-url-tester": "./src/cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
