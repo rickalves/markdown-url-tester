@@ -1,13 +1,16 @@
 {
   "name": "markdown-url-tester",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tester of markdown url fetch status",
   "main": "./src/cli.js",
   "type": "module",
-  "keywords": ["markdown", "URL"],
+  "keywords": [
+    "markdown",
+    "URL"
+  ],
   "bugs": {
-    "url" : "https://github.com/rickalves/markdown-url-tester/issues",
-    "email" : "henryworkdev.ti@gmail.com"
+    "url": "https://github.com/rickalves/markdown-url-tester/issues",
+    "email": "henryworkdev.ti@gmail.com"
   },
   "bin": {
     "markdown-url-tester": "./src/cli.js"
