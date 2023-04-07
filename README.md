@@ -44,7 +44,7 @@ npm install markdown-url-tester
 ```
 npm run cli <path>
 ```
-The markdown URL tester will show all urls in the markdown files found on the passed path.
+The markdown URL tester will show all urls found in the markdown files passed on path.
 
 ## Output
 #
